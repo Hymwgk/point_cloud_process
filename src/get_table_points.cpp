@@ -20,28 +20,22 @@ class RAI_pre_precess
 {
 	public:
   	ros::NodeHandle nh;
-
 		ros::Publisher pub;
     ros::Publisher pub_1;
-
-		
 		ros::Subscriber sub;
 
     tf::TransformListener listener;
 
     Eigen::Matrix4f transform_matrix;
-
-        //预处理类
-	    Pre_process pre_process;
-
-	    sensor_msgs::PointCloud2 pre_pocessed;//声明的输出的点云的格式
-
-
+    //预处理类
+	  Pre_process pre_process;
+	  sensor_msgs::PointCloud2 pre_pocessed;//声明的输出的点云的格式
     RAI_pre_precess(std::string config_path):pre_process(config_path)
     {
       
       tf::StampedTransform transform;
       bool tf_ok=false;
+      //等待并读取桌面标签坐标系和Kinect坐标系之间的变换关系
       while(!tf_ok){
         try{
           listener.lookupTransform("/ar_marker_6", "/kinect2_rgb_optical_frame",
@@ -56,28 +50,16 @@ class RAI_pre_precess
         }
       }
 
-
-
-
-
 		  pub = nh.advertise<sensor_msgs::PointCloud2> ("/table_top_points", 1);
       pub_1 = nh.advertise<sensor_msgs::PointCloud2> ("/table_top_points_subsampled", 1);
       sub = nh.subscribe<sensor_msgs::PointCloud2> ("/kinect2/qhd/points", 1, &RAI_pre_precess::cloud_cb,this);
-
-
-
-
     }
-
-    
     void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 	{
 
     PointCloud<PointXYZ>::Ptr cloud(new PointCloud<PointXYZ>());
     PointCloud<PointXYZ>::Ptr cloud_subsampled(new PointCloud<PointXYZ>());
 		PointCloud<PointXYZ>::Ptr cloud_transformed(new PointCloud<PointXYZ>());
-
-    //print();
     printf("/kinect2/hd/points的父坐标系为  %s \n", cloud_msg->header.frame_id.c_str());
 		//把kinect点云数据转化为pcl数据
 		pcl::fromROSMsg	(*cloud_msg,*cloud);
@@ -93,7 +75,7 @@ class RAI_pre_precess
     //预处理发布
 		pcl::toROSMsg	(*cloud_transformed, pre_pocessed);//第一个参数是输入，后面的是输出
 
-    //设置处理后的消息
+    //将处理后的消息转换为ROS消息
     pre_pocessed.header.frame_id="/ar_marker_6";
     pre_pocessed.header.stamp = ros::Time::now();
     pre_pocessed.header.seq=1;
@@ -128,8 +110,6 @@ class RAI_pre_precess
         transform_matrix = (tl_btol * rot_z_btol * rot_y_btol * rot_x_btol).matrix();
         return true;
     }
-
-
 
 };
 
@@ -188,7 +168,5 @@ int main(int argc, char **argv)
   {
     printf("参数过多，或未输入配置文件地址！\n");
   }
-  
-
-  return 0;
+    return 0;
 }
