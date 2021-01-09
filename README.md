@@ -42,19 +42,25 @@ subsampling_leaf_size=0.004              设置降采样voxel尺寸
 ```
 
 ## 使用
-1. 运行本代码之前必须已经提前运行了Kinect v2相机 ，并发布了相应话题： 
+1. 克隆到自己的ros工作空间中  
+   ```bash
+   cd ~/catkin_ws/src
+   git clone https://github.com/Hymwgk/point_cloud_process.git
+   catkin build
+   ```
+2. 运行本代码之前必须已经提前运行了Kinect v2相机 ，并发布了相应话题： 
    ```bash
    roslaunch kinect2_bridge kinect2_bridge.launch publish_tf:=true
    ```
-1. 启动桌面标签识别追踪节点（需要提前安装了[ar_track_alvar](http://wiki.ros.org/ar_track_alvar/)程序包）：
+3. 启动桌面标签识别追踪节点（需要提前安装了[ar_track_alvar](http://wiki.ros.org/ar_track_alvar/)程序包）：
    ```bash
    roslaunch point_cloud_process marker_track.launch
    ```
-1. 启动预处理节点：
+4. 启动预处理节点：
    ```bash
    rosrun point_cloud_process get_table_points ~/catkin_ws/src/point_cloud_process/config/prepocess_prarm.txt
    ```
-1. 启动rviz  
+5. 启动rviz  
    ```bash
    rviz
    ```
