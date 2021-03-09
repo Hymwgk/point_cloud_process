@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="prepocess_prarm_location" default="$(find point_cloud_process)/config/prepocess_prarm.txt"  />
+  <!--启动桌面标签识别定位节点-->
+  <include file="$(find point_cloud_process)/launch/marker_track.launch"/>
+  <!--启动点云预处理节点-->
+  <node name="table_top_points" pkg="point_cloud_process" type="get_table_points" respawn="false"  args="$(arg prepocess_prarm_location)"  output="screen"/>
+</launch>
