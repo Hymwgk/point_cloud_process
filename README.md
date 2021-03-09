@@ -47,7 +47,7 @@ Point cloud pre-process for  PointNetGPD & Kinect v2
 
    
 
-## 使用
+## 安装与使用
 
 1. 克隆到自己的ros工作空间中  
    ```bash
@@ -55,12 +55,6 @@ Point cloud pre-process for  PointNetGPD & Kinect v2
    git clone https://github.com/Hymwgk/point_cloud_process.git
    catkin build
    ```
-   
-2. 确保已经安装了Kinect深度相机驱动（我们版本是Ubuntu18.04LTS，以及Kinect V2相机）以及相关ROS程序包，并进行了相机内参标定。
-   
-   - 先安装Kinect驱动，参见https://github.com/OpenKinect/libfreenect2
-   - 再安装Kinect的ROS程序包，参见https://github.com/code-iai/iai_kinect2
-   - Kinect标定，参见https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration#calibrating-the-kinect-one
    
 3. 运行本代码之前必须已经提前运行了Kinect v2相机 ，并发布了相应话题： 
 
