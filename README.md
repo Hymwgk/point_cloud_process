@@ -6,14 +6,15 @@ Point cloud pre-process for  PointNetGPD & Kinect v2
 ***
 ## **简介**
 
-- 通过Kinect v2 读取桌面物体的场景点云，并进行系列预处理，支持：
+- 通过Kinect v2 读取桌面物体的场景点云，并进行系列预处理，保留感兴趣区域点云，支持：
    - 相机坐标系三轴方向直通滤波
    - 剔除支撑桌面
    - 剔除离群点
    - 点云降采样
    - 点云光滑处理
-- 通过ROS_tf读取某桌面标签二维码坐标系(目标标签名称为"ar_marker_6")与相机坐标系"kinect2_rgb_optical_frame"之间的坐标关系；
-- 将预处理后的点云转换到桌面二维码坐标系中，并将该点云以ROS话题形式发布出去；话题名称：
+- 通过ROS_tf读取某桌面标签二维码坐标系(目标标签名称为"ar_marker_6")与相机坐标系"kinect2_rgb_optical_frame"之间的坐标关系，从而将感兴趣区域点云转换到桌面标签坐标系中；
+- 将预处理后的点云（父坐标系为桌面标签“ar_marker_6”坐标系）以ROS话题形式发布出去，话题名称：
+   
    ```
    /table_top_points       #仅滤波剔除桌面等预处理后的点云
    /table_top_points_subsampled      #预处理+降采样
