@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks":
+	[
+		{
+			"type": "shell",
+			//这个是标签，会显示出来
+			"label": "Build_Debug", 
+			//command  相当于在终端输入的指令
+			"command": " source /opt/ros/melodic/setup.bash    && cd ~/catkin_ws && catkin_make  -DCMAKE_BUILD_TYPE=Debug",  
+			//下面是可以传给程序的参数，可以根据自己的情况更改
+			"args": [
+			],
+			"problemMatcher":  [
+				"$catkin-gcc"
+			],
+			"group": {
+				"kind": "build",
+			"isDefault": true
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Build_Release",
+			"command": "source /opt/ros/melodic/setup.bash && cd ~/catkin_ws   &&catkin_make  -DCMAKE_BUILD_TYPE=Release",
+			"args": [
+			],
+			"problemMatcher":  [
+				"$catkin-gcc"
+			]
+		}
+	]
+}
